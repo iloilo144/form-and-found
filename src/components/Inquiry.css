@@ -211,3 +211,17 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* keep browser autofill from painting a blue/white box over the hairline fields */
+.inq__field input:-webkit-autofill,
+.inq__field input:-webkit-autofill:hover,
+.inq__field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--black);
+  caret-color: var(--black);
+  box-shadow: 0 0 0 100px var(--bone) inset;
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+.inq__field input:autofill {
+  box-shadow: 0 0 0 100px var(--bone) inset;
+}
