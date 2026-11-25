@@ -3,7 +3,7 @@
 A premium, art-directed landing page for **Form & Found**, a fictional independent
 architecture and interior design studio working in Lisbon and on the Alentejo coast.
 
-> Live demo: [form-and-found-iota.vercel.app](https://form-and-found-iota.vercel.app) · Part of [my portfolio](https://portfolio-beta-gilt-2tyi5pjln6.vercel.app)
+> Live demo: [form-and-found-iota.vercel.app](https://form-and-found-iota.vercel.app) · Part of [my portfolio](https://ilia-rusia.vercel.app)
 
 ![Form & Found hero](docs/screenshot.jpg)
 
