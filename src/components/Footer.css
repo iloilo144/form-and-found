@@ -1,0 +1,89 @@
+.footer {
+  margin-top: clamp(7rem, 13vw, 11rem);
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+  border-top: 1px solid var(--black);
+  overflow: hidden;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.footer__grid .label {
+  margin-bottom: 0.6rem;
+}
+
+.footer__links {
+  display: grid;
+}
+
+.footer__links a {
+  justify-self: start;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.4s var(--ease);
+}
+
+.footer__links a:hover {
+  color: var(--rust);
+  transform: translateX(0.3rem);
+}
+
+.footer__top {
+  justify-self: end;
+}
+
+.footer__mark {
+  margin: clamp(3rem, 8vw, 6rem) 0 1rem;
+  font-family: var(--serif);
+  font-size: clamp(4rem, 15.5vw, 16rem);
+  font-weight: 300;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+.footer__mark em {
+  color: var(--rust);
+}
+
+.footer__small {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 800px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__top {
+    justify-self: start;
+  }
+}
+
+/* the oversized wordmark rises out of the page edge as it scrolls into view */
+@supports (animation-timeline: view()) {
+  html:not([data-motion='calm']) {
+    .footer__mark {
+      animation: mark-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+  }
+}
+
+@keyframes mark-rise {
+  from {
+    transform: translateY(45%);
+    opacity: 0.15;
+    letter-spacing: 0.02em;
+  }
+}

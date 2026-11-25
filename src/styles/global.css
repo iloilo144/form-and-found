@@ -1,0 +1,260 @@
+:root {
+  --bone: #f2efe9;
+  --bone-2: #e7e2d9;
+  --black: #121110;
+  --stone: #625d56;
+  --stone-light: #a8a399;
+  --line: rgba(18, 17, 16, 0.14);
+  --rust: #9c4a2b;
+
+  --serif: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
+  --sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+
+  --gutter: clamp(1.25rem, 3.5vw, 3rem);
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+}
+
+em {
+  font-style: italic;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--black);
+  color: var(--bone);
+}
+
+:focus-visible {
+  outline: 1px solid var(--rust);
+  outline-offset: 4px;
+}
+
+.shell {
+  padding-inline: var(--gutter);
+}
+
+.label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--stone);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.5rem 1rem;
+  background: var(--black);
+  color: var(--bone);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* underline that draws away and back */
+.line-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0 0.3rem;
+  border: 0;
+  background: none;
+  text-decoration: none;
+}
+
+.line-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 0.7s var(--ease);
+}
+
+.line-link:hover::after {
+  transform: scaleX(0);
+}
+
+.line-link:hover {
+  color: var(--rust);
+}
+
+/* ------------------------------------------------------------------------
+   Scroll-driven reveals.
+   Browsers with CSS scroll-driven animations tie the motion directly to the
+   scroll position (no JavaScript). Others fall back to an IntersectionObserver
+   that adds .is-in (see useReveal).
+   ------------------------------------------------------------------------ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+  transition-delay: var(--delay, 0s);
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal='image'] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(18% 8% 0 8%);
+  transition: clip-path 1.6s var(--ease);
+}
+
+[data-reveal='image'] img {
+  scale: 1.25;
+  transition: scale 2s var(--ease);
+}
+
+[data-reveal='image'].is-in {
+  clip-path: inset(0 0 0 0);
+}
+
+[data-reveal='image'].is-in img {
+  scale: 1;
+}
+
+@supports (animation-timeline: view()) {
+  html:not([data-motion='calm']) {
+    [data-reveal],
+    [data-reveal].is-in {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 70%;
+    }
+
+    [data-reveal='image'],
+    [data-reveal='image'].is-in {
+      animation: unclip linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 45%;
+    }
+
+    [data-reveal='image'] img,
+    [data-reveal='image'].is-in img {
+      transition: none;
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}
+
+@keyframes unclip {
+  from {
+    clip-path: inset(22% 10% 0 10%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* the photo zooms out and drifts slower than the page: parallax */
+@keyframes settle {
+  from {
+    scale: 1.3;
+    translate: 0 -6%;
+  }
+  to {
+    scale: 1.05;
+    translate: 0 6%;
+  }
+}
+
+html[data-motion='calm'] {
+  scroll-behavior: auto;
+}

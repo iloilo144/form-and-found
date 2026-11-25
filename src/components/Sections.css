@@ -1,0 +1,340 @@
+/* Intro ------------------------------------------------------------------- */
+.intro {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  padding-top: clamp(6rem, 12vw, 10rem);
+}
+
+.intro__label {
+  grid-column: 1 / 4;
+  color: var(--stone);
+  padding-top: 0.9rem;
+}
+
+.intro__text {
+  grid-column: 4 / 13;
+  font-size: clamp(2rem, 4.2vw, 3.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.intro__text em {
+  font-style: italic;
+  color: var(--rust);
+}
+
+.intro__detail {
+  grid-column: 4 / 7;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}
+
+.intro__detail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.intro__note {
+  grid-column: 8 / 12;
+  align-self: end;
+  max-width: 24rem;
+}
+
+/* Studio -------------------------------------------------------------------- */
+.studio {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  align-items: center;
+  padding-top: clamp(7rem, 13vw, 11rem);
+}
+
+.studio__img {
+  grid-column: 1 / 6;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.studio__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.25);
+}
+
+.studio__text {
+  grid-column: 7 / 12;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.studio__text h2 {
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+}
+
+.studio__text h2 em {
+  font-style: italic;
+  color: var(--stone);
+}
+
+.studio__text > p:not(.label) {
+  max-width: 32rem;
+  color: #3c3a36;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem 2rem;
+  margin: 1rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.facts dd {
+  margin: 0.35rem 0 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+}
+
+/* Services ---------------------------------------------------------------- */
+.services {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  padding-top: clamp(7rem, 13vw, 11rem);
+}
+
+.services__head {
+  grid-column: 1 / 5;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.services__head h2 {
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+}
+
+.services__list {
+  grid-column: 5 / 13;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--black);
+}
+
+.services__list > li {
+  border-bottom: 1px solid var(--line);
+}
+
+.services__list h3 {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+.services__list button {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+
+.services__title {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1;
+  transition: transform 0.6s var(--ease), color 0.4s;
+}
+
+.services__list button:hover .services__title {
+  transform: translateX(0.75rem);
+}
+
+.services__list .is-open .services__title {
+  font-style: italic;
+  color: var(--rust);
+}
+
+.services__icon {
+  position: relative;
+  width: 1rem;
+  height: 1rem;
+}
+
+.services__icon::before,
+.services__icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--black);
+  transition: transform 0.5s var(--ease);
+}
+
+.services__icon::after {
+  transform: rotate(90deg);
+}
+
+.is-open .services__icon::after {
+  transform: rotate(0deg);
+}
+
+/* grid-rows trick animates height without measuring */
+.services__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s var(--ease);
+}
+
+.is-open .services__panel {
+  grid-template-rows: 1fr;
+}
+
+.services__panel > div {
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2rem;
+  padding-left: 3rem;
+}
+
+.is-open .services__panel > div {
+  padding-bottom: 1.75rem;
+}
+
+.services__panel p {
+  color: #3c3a36;
+  max-width: 30rem;
+}
+
+.services__panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.services__panel ul li {
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Philosophy -------------------------------------------------------------- */
+.philosophy {
+  margin-top: clamp(7rem, 13vw, 11rem);
+  padding-block: clamp(6rem, 12vw, 10rem);
+  background: var(--black);
+  color: var(--bone);
+}
+
+.philosophy__head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+}
+
+.philosophy__head .label {
+  grid-column: 1 / 4;
+  color: var(--stone-light);
+  padding-top: 0.9rem;
+}
+
+.philosophy__head h2 {
+  grid-column: 4 / 13;
+  font-size: clamp(2.4rem, 5.2vw, 5rem);
+  line-height: 1.02;
+}
+
+.philosophy__head em {
+  font-style: italic;
+  color: #d08a67;
+}
+
+.principles {
+  list-style: none;
+  margin: clamp(4rem, 8vw, 7rem) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.principles li {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(236, 232, 225, 0.25);
+}
+
+.principles__num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--stone-light);
+}
+
+.principles h3 {
+  margin: 1.75rem 0 1rem;
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  line-height: 1.05;
+}
+
+.principles p {
+  color: #bdb7ad;
+  max-width: 22rem;
+}
+
+@media (max-width: 900px) {
+  .intro__label,
+  .intro__text,
+  .studio__img,
+  .studio__text,
+  .services__head,
+  .services__list,
+  .philosophy__head .label,
+  .philosophy__head h2 {
+    grid-column: 1 / -1;
+  }
+
+  .intro__detail {
+    grid-column: 1 / 7;
+  }
+
+  .intro__note {
+    grid-column: 7 / -1;
+  }
+
+
+  .principles {
+    grid-template-columns: 1fr;
+  }
+
+  .services__panel > div {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .intro__detail,
+  .intro__note {
+    grid-column: 1 / -1;
+  }
+
+  .services__panel > div {
+    padding-left: 0;
+  }
+
+  .services__list button {
+    grid-template-columns: 2.5rem 1fr auto;
+  }
+}

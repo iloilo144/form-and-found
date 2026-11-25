@@ -1,0 +1,204 @@
+.hgallery {
+  margin-top: clamp(7rem, 13vw, 11rem);
+}
+
+.hgallery__sticky {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hgallery__head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  align-items: end;
+}
+
+.hgallery__head > div {
+  grid-column: 1 / 8;
+  display: grid;
+  gap: 1rem;
+}
+
+.hgallery__head h2 {
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+}
+
+.hgallery__intro {
+  grid-column: 9 / 13;
+  max-width: 22rem;
+}
+
+.hgallery__track {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(1rem, 2vw, 2rem);
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+
+.hgallery__item {
+  flex: none;
+  margin: 0;
+}
+
+.hgallery__frame {
+  overflow: hidden;
+}
+
+.hgallery__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 1.2s var(--ease-out), filter 0.8s;
+}
+
+.hgallery__item:hover img {
+  scale: 1.05;
+}
+
+.hgallery__item--wide {
+  width: clamp(18rem, 44vw, 44rem);
+}
+
+.hgallery__item--wide .hgallery__frame {
+  aspect-ratio: 3 / 2;
+}
+
+.hgallery__item--tall {
+  width: clamp(13rem, 24vw, 24rem);
+}
+
+.hgallery__item--tall .hgallery__frame {
+  aspect-ratio: 3 / 4;
+}
+
+.hgallery__item figcaption {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.hgallery__end {
+  flex: none;
+  display: grid;
+  align-content: end;
+  gap: 1rem;
+  width: clamp(16rem, 28vw, 26rem);
+  padding-bottom: 2.5rem;
+}
+
+.hgallery__end-title {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.hgallery__end-title em {
+  color: var(--rust);
+}
+
+.hgallery__bar span {
+  display: block;
+  height: 1px;
+  background: var(--black);
+  transform-origin: left;
+  transform: scaleX(0.15);
+}
+
+/* without scroll timelines: a regular swipeable row */
+@supports not (animation-timeline: view()) {
+  .hgallery__track {
+    width: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .hgallery__item {
+    scroll-snap-align: start;
+  }
+
+  .hgallery__bar {
+    display: none;
+  }
+}
+
+/* with scroll timelines: pin the section and slide the strip as you scroll down */
+@supports (animation-timeline: view()) {
+  html:not([data-motion='calm']) {
+    .hgallery {
+      height: calc(100vh + var(--travel));
+      view-timeline-name: --gallery;
+    }
+
+    .hgallery__sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      padding-top: 4.75rem;
+    }
+
+    .hgallery__track {
+      animation: gallery-slide linear both;
+      animation-timeline: --gallery;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .hgallery__bar span {
+      animation: gallery-progress linear both;
+      animation-timeline: --gallery;
+      animation-range: contain 0% contain 100%;
+    }
+
+    /* photos shift slightly inside their frames as they pass: parallax */
+    .hgallery__frame img {
+      animation: frame-drift linear both;
+      animation-timeline: view(inline);
+    }
+  }
+
+  html[data-motion='calm'] {
+    .hgallery__track {
+      width: auto;
+      overflow-x: auto;
+    }
+  }
+}
+
+@keyframes gallery-slide {
+  to {
+    transform: translateX(calc(-1 * var(--travel)));
+  }
+}
+
+@keyframes gallery-progress {
+  from {
+    transform: scaleX(0.05);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes frame-drift {
+  from {
+    translate: 6% 0;
+    scale: 1.15;
+  }
+  to {
+    translate: -6% 0;
+    scale: 1.15;
+  }
+}
+
+@media (max-width: 900px) {
+  .hgallery__head > div,
+  .hgallery__intro {
+    grid-column: 1 / -1;
+  }
+}
